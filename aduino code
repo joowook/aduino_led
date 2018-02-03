@@ -1,0 +1,182 @@
+#include <SoftwareSerial.h>
+ 
+SoftwareSerial hm10(2,3); //RX, TX 연결
+byte data;
+int red=0, blue=0, yellow=0, white=0, green=0, val=0;
+const int RED=13;
+const int BLUE=12;
+const int YELLOW=11;
+const int WHITE=110;
+const int GREEN=9;
+const int BUTTON=8;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  hm10.begin(9600);
+  pinMode(RED, OUTPUT);
+  pinMode(BLUE, OUTPUT);
+  pinMode(YELLOW, OUTPUT);
+  pinMode(WHITE, OUTPUT);
+  pinMode(GREEN, OUTPUT);
+  pinMode(BUTTON, INPUT);
+}
+ 
+void loop() {
+  val = digitalRead(BUTTON);
+
+  if(val == HIGH) {
+    if(red==0) {
+      digitalWrite(RED, HIGH);
+    }
+    else {
+      digitalWrite(RED, LOW);
+    }
+    red = 1-red;
+
+    if(blue==0) {
+      digitalWrite(BLUE, HIGH);
+    }
+    else {
+      digitalWrite(BLUE, LOW);
+    }
+    blue = 1-blue;
+
+    if(yellow==0) {
+      digitalWrite(YELLOW, HIGH);
+    }
+    else {
+      digitalWrite(YELLOW, LOW);
+    }
+    yellow = 1-yellow;
+
+    if(white==0) {
+      digitalWrite(WHITE, HIGH);
+    }
+    else {
+      digitalWrite(WHITE, LOW);
+    }
+    white = 1-white;
+
+     if(green==0) {
+      digitalWrite(GREEN, HIGH);
+    }
+    else {
+      digitalWrite(GREEN, LOW);
+    }
+    green = 1-green;
+
+    delay(1000);
+  }
+  
+  if(hm10.available()){
+    data = hm10.read();
+    Serial.write(data);
+
+    if(data=='1') {
+      if(red==0) {
+        digitalWrite(RED, HIGH);
+      }
+      else {
+        digitalWrite(RED, LOW);
+      }
+      red = 1-red;
+      }
+      else if(data=='2') {
+        if(blue==0) {
+          digitalWrite(BLUE, HIGH);
+        }
+        else {
+          digitalWrite(BLUE, LOW);
+        }
+        blue = 1-blue;
+      }
+      else if(data=='3') {
+        if(yellow==0) {
+          digitalWrite(YELLOW, HIGH);
+        }
+        else {
+          digitalWrite(YELLOW, LOW);
+        }
+        yellow = 1-yellow;
+      }
+      else if(data=='4') {
+        if(white==0) {
+          digitalWrite(WHITE, HIGH);
+        }
+        else {
+          digitalWrite(WHITE, LOW);
+        }
+        white = 1-white;
+      }
+      else if(data=='5') {
+         if(green==0) {
+          digitalWrite(GREEN, HIGH);
+        }
+        else {
+          digitalWrite(GREEN, LOW);
+        }
+        green = 1-green;
+      }
+      else if(data=='a') {
+        digitalWrite(RED, HIGH);
+        digitalWrite(BLUE, HIGH);
+        digitalWrite(YELLOW, HIGH);
+        digitalWrite(WHITE, HIGH);
+        digitalWrite(GREEN, HIGH);
+        red=blue=yellow=white=green=1;
+      }
+      else if(data=='b') {
+        digitalWrite(RED, LOW);
+        digitalWrite(BLUE, LOW);
+        digitalWrite(YELLOW, LOW);
+        digitalWrite(WHITE, LOW);
+        digitalWrite(GREEN, LOW);
+        red=blue=yellow=white=green=0;
+      }
+      else if(data =='c') {
+        if(red==0) {
+        digitalWrite(RED, HIGH);
+      }
+      else {
+        digitalWrite(RED, LOW);
+      }
+      red = 1-red;
+  
+      if(blue==0) {
+        digitalWrite(BLUE, HIGH);
+      }
+      else {
+        digitalWrite(BLUE, LOW);
+      }
+      blue = 1-blue;
+  
+      if(yellow==0) {
+        digitalWrite(YELLOW, HIGH);
+      }
+      else {
+        digitalWrite(YELLOW, LOW);
+      }
+      yellow = 1-yellow;
+  
+      if(white==0) {
+        digitalWrite(WHITE, HIGH);
+      }
+      else {
+        digitalWrite(WHITE, LOW);
+      }
+      white = 1-white;
+  
+       if(green==0) {
+        digitalWrite(GREEN, HIGH);
+      }
+      else {
+        digitalWrite(GREEN, LOW);
+      }
+      green = 1-green;
+    }     
+  }
+  if(Serial.available()){
+    hm10.write(Serial.read());
+  }
+}
